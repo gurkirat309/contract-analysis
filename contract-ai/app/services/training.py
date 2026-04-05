@@ -110,15 +110,15 @@ def run_training(
         learning_rate=learning_rate,
         warmup_ratio=settings.warmup_ratio,
         weight_decay=settings.weight_decay,
-        eval_strategy=settings.eval_strategy,
-        save_strategy=settings.save_strategy,
+        evaluation_strategy="epoch",  # evaluation_strategy is still most compatible
+        save_strategy="epoch",
         logging_steps=settings.logging_steps,
-        load_best_model_at_end=settings.load_best_model_at_end,
-        metric_for_best_model=settings.metric_for_best_model,
+        load_best_model_at_end=True,
+        metric_for_best_model="f1",
         greater_is_better=True,
-        report_to="none",            # disable W&B / HF Hub logging by default
-        fp16=False,                  # set True if CUDA available for speed
-        dataloader_num_workers=0,    # safe default for Windows
+        report_to="none",
+        fp16=False,
+        dataloader_num_workers=0,
     )
 
     # ------------------------------------------------------------------ #
@@ -131,7 +131,6 @@ def run_training(
         args=training_args,
         train_dataset=tokenized["train"],
         eval_dataset=tokenized["test"],
-        tokenizer=tokenizer,
         data_collator=data_collator,
         compute_metrics=_compute_metrics,
         callbacks=[EarlyStoppingCallback(early_stopping_patience=2)],

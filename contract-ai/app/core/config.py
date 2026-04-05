@@ -35,7 +35,7 @@ class Settings(BaseSettings):
 
     # --- Training ---
     dataset_name: str = "alisha4walunj/quad_ledgar_merged_dataset"
-    text_column: str = "provision"  # column containing clause text
+    text_column: str = "text"  # column containing clause text
     label_column: str = "label"     # column containing the class label
     test_size: float = 0.15
     num_train_epochs: int = 3
